@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  server:
+    build:
+      context: ..
+      dockerfile: "docker files/server_dockerfile"
+    entrypoint: ["python", "server.py"]
+    ports:
+      - "50007:50007"
+    tty: true        
+    container_name: ttt_server
+    networks:
+      - tictactoe-network
+
+  client:
+    build:
+      context: ..
+      dockerfile: "docker files/client_dockerfile"
+    entrypoint: ["python3", "runner.py"]
+    links:
+      - server
+    depends_on:
+      - server
+    container_name: ttt_client
+    networks:
+      - tictactoe-network
+
+networks:
+  tictactoe-network:
+    name: tictactoe_network

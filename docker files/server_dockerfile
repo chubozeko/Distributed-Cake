@@ -1,0 +1,4 @@
+FROM python:3.10.1
+WORKDIR /code
+COPY ./minimaxAgent.pyc /code/
+COPY ./server.py /code/

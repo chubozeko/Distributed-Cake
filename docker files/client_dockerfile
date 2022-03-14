@@ -1,0 +1,14 @@
+FROM ubuntu:latest
+WORKDIR /code
+COPY ./OpenSans-Regular.ttf /code/
+COPY ./runner.py /code/
+COPY ./tictactoe.py /code/
+COPY ./requirements.txt /code/
+ENV DISPLAY=host.docker.internal:0.0 
+ARG DEBIAN_FRONTEND=noninteractive 
+RUN apt update 
+RUN apt install -y python3 
+RUN apt install -y python3-pip 
+RUN python3 -m pip install --requirement requirements.txt
+RUN apt install -yq pcmanfm 
+RUN sed -i -e {s:"'localhost":"'server":} tictactoe.py
